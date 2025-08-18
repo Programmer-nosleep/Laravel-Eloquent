@@ -7,7 +7,9 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Scopes\IsActiveScope;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\CustomerSeeder;
 use Database\Seeders\ProductSeeder;
+use Database\Seeders\ReviewSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -251,5 +253,17 @@ class CategoryTest extends TestCase
         self::assertCount(1, $outOfStockProducts);
     }
 
+    public function testHasManyThrough()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, CustomerSeeder::class, ReviewSeeder::class]);
+
+        // reviews are linked to products in the FOOD category
+        $category = Category::find("FOOD");
+        self::assertNotNull($category);
+
+        $reviews = $category->reviews;
+        self::assertNotNull($reviews);
+        self::assertCount(2, $reviews);
+    }
 }
 

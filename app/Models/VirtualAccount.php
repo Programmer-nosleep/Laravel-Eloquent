@@ -6,8 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * VirtualAccount model
+ *
+ * Represents a virtual bank account attached to a Wallet.
+ * Relations:
+ *  - wallet(): belongsTo Wallet
+ */
 class VirtualAccount extends Model
 {
+    // Table config
     protected $table = "virtual_accounts";
     protected $primaryKey = "id";
     protected $keyType = "int";
@@ -17,6 +25,8 @@ class VirtualAccount extends Model
 
     public function wallet(): BelongsTo
     {
-        return $this->belongsTo(Wallet::class, "wallet_id", "id");
+    // VirtualAccount belongs to a Wallet
+    // Access via $virtualAccount->wallet
+    return $this->belongsTo(Wallet::class, "wallet_id", "id");
     }
 }

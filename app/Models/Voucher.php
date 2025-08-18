@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Voucher model
+ *
+ * Represents promo vouchers. Uses UUIDs and supports soft deletes.
+ * Relations / helpers: uniqueIds(), scopeActive(), scopeNonActive()
+ */
 class Voucher extends Model
 {
     /**
