@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Product model
@@ -34,5 +35,10 @@ class Product extends Model
     {
         // Product has many reviews; access via $product->reviews (Collection)
         return $this->hasMany(Review::class, 'product_id', 'id');
+    }
+
+    public function likedByCustomers(): BelongsToMany
+    {
+        return $this->belongsToMany(Customer::class, "customers_likes_products", "product_id", "customer_id");
     }
 }

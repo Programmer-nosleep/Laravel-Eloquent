@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
@@ -31,9 +32,9 @@ class Customer extends Model
 
     public function wallet(): HasOne
     {
-    // One-to-one: Customer -> Wallet
-    // Access via $customer->wallet
-    return $this->hasOne(Wallet::class, "customer_id", "id");
+        // One-to-one: Customer -> Wallet
+        // Access via $customer->wallet
+        return $this->hasOne(Wallet::class, "customer_id", "id");
     }
 
     public function virtualAccount(): HasOneThrough
@@ -52,8 +53,13 @@ class Customer extends Model
 
     public function reviews(): HasMany
     {
-    // One-to-many: Customer -> Review
-    // Access via $customer->reviews (Collection)
-    return $this->hasMany(Review::class, "customer_id", "id");
+        // One-to-many: Customer -> Review
+        // Access via $customer->reviews (Collection)
+        return $this->hasMany(Review::class, "customer_id", "id");
+    }
+
+    public function likeProducts(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, "customers_likes_products", "customer_id", "product_id");
     }
 }
